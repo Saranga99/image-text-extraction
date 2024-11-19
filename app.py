@@ -8,7 +8,7 @@ import fitz
 import shutil
 import pytesseract
 from pytesseract import Output
-pytesseract.pytesseract.tesseract_cmd = r'D:\applications\tesseract\tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = r'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 #temp locations
 pages="temp/images/pdf_pages"
 output_nic="output/nic"
@@ -30,22 +30,22 @@ def detect_faces(our_image):
 	# Draw rectangle around the faces
 	for (x, y, w, h) in faces:
 				 cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
-	return img,faces 
+	return img,faces
 
 def pdf2_image(path):
     pages_paths=[]
     doc = fitz.open(path)
     zoom = 2 # to increase the resolution
     mat = fitz.Matrix(zoom, zoom)
-    noOfPages = doc.pageCount
+    noOfPages = doc.page_count
     image_folder = 'temp/images/pdf_pages/'
 
     for pageNo in range(noOfPages):
-        page = doc.loadPage(pageNo) #number of page
-        pix = page.getPixmap(matrix = mat)
+        page = doc.load_page(pageNo) #number of page
+        pix = page.get_pixmap(matrix = mat)
     
         output = image_folder + str(pageNo) + '.jpg' 
-        pix.writePNG(output)
+        pix._writeIMG(output)
         pages_paths.append(output)
         
     return pages_paths
